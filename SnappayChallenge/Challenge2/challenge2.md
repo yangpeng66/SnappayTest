@@ -27,7 +27,7 @@ Effort estimation:
 	
 	We also can use Ansible to build the infrasture for the website. Under directory website-ansible is the design and I have implemented the basic struture of the ansible script to build the infrusture. Below is a description for the each directory:  
 
-	website-ansible  
+		website-ansible  
 			|-tasks: set up directories, user, Certbot, set up ssl.conf  
 			|-setup: prepare to run the Ansbile
 			|-local_inventory: put server list into inventory, the Ansible can run tasks on multiple servers in once.
