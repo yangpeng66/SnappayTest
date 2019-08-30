@@ -1,0 +1,21 @@
+
+- file:
+    path: /etc/httpd/conf.d/non-ssl.conf
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+
+- name: insert content into non-ssl.conf
+  blockinfile:
+    path: /etc/httpd/conf.d/non-ssl.conf
+    block: |
+      <VirtualHost *:80>
+              RewriteEngine on
+              RewriteRule "^/?(.*)"      "https://%{HTTP_HOST}/$1" [R=301]
+      </VirtualHost>
+
+- name: Restart service httpd, in all cases
+  service:
+    name: httpd
+    state: restarted

@@ -1,0 +1,12 @@
+[dev_hosts]
+server list
+a
+b
+c
+...
+
+[dev_hosts:vars]
+ansible_connect=ssh 
+ansible_user=snappay
+ansible_python_interpreter=/usr/bin/python?
+

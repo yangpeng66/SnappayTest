@@ -1,0 +1,13 @@
+
+- hosts: xxxx
+  remote_user: snappay
+  become: True
+  vars:
+    default_password: changeme
+    dev_pass: "xxxx"
+    snappay_pass: "xxxx"
+    snappay_homedir: /opt/xxx
+    snappay_user: snappay
+  tasks:
+      - include: tasks/initial_steps/initial_setup.yml
+      - include: tasks/users/dev_user.yml

@@ -1,0 +1,42 @@
+### setup certbot for free SSL certificates
+
+# This can only be run after dns setup.
+# Can only be run on first setup.
+
+- name: "install certbot"
+  yum: name={{ item }} state=latest
+  with_items:
+    - python-certbot-apache
+
+- name: "copy defult virtualHost conf"
+    copy: src=default.conf dest="/etc/httpd/conf.d/default.conf" mode=0755 owner="root"
+
+- name: "rename welcome.conf"
+    command: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.bak
+
+- name: "update server name in ssl config"
+  lineinfile:
+    dest: /etc/httpd/conf.d/ssl.conf
+    regexp: "^#?ServerName"
+    line: "ServerName xxxxxx:443"
+
+- name: "generate certificate"
+  shell: certbot --authenticator standalone --installer apache  -d $(hostname) --agree-tos -m admin@snappay.com --no-eff-email
+
+- name: "update ssl conf 1"
+  lineinfile:
+    dest: /etc/httpd/conf.d/ssl.conf
+    regexp: ""
+    line: ""
+
+- name: "Set cron job for certbot"
+  blockinfile:
+    dest: "/etc/cron.d/certbot"
+    create: yes
+    block: |
+      # Minute   Hour     Day of Month   Month              Day of Week       Who   Command
+      # (0-59)   (0-23)   (1-31)         (1-12 or Jan-Dec)  (0-6 or Sun-Sat)  root  /script.sh
+
+      # Runs at 2pm local time every Monday.
+      MAILTO=xxxx
+      00 14 * * 1 root /bin/certbot renew --renew-hook "/usr/sbin/apachectl graceful"

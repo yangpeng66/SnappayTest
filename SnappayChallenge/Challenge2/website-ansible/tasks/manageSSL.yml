@@ -1,0 +1,11 @@
+
+- name: "set maker 1"
+  lineinfile:
+    dest: /etc/httpd/conf.d/ssl.conf
+    regexp: ""
+    line: ""
+
+- name: Restart service httpd, in all cases
+  service:
+    name: httpd
+    state: restarted

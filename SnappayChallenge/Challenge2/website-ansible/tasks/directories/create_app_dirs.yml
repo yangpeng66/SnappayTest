@@ -1,0 +1,7 @@
+## create website dirs
+---
+
+  - name: opt/companywebsite/0.0.1 dir
+    file: path=/opt/companywebsite/1.0.0 state=directory owner=snappay group=snappay
+
+

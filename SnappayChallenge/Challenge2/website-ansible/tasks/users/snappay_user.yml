@@ -1,0 +1,6 @@
+## create user member of dev group
+
+  - name: snappay user
+    user: name=snappay group=dev password={{ snappay_pass }}
+  - name: snappay sudo
+    lineinfile: dest=/etc/sudoers line="snappay ALL=(ALL) ALL" insertafter="root ALL"

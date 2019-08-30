@@ -1,0 +1,15 @@
+## VM Setup
+
+  - name: "install prerequisites"
+    yum: name={{ item }} state=latest
+    with_items:
+      - htop
+      - httpd
+      - mod_ssl
+      
+
+  - name: "start httpd service by default"
+    service:
+      name: httpd
+      state: restarted
+      enabled: yes
